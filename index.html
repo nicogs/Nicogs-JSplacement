@@ -1,0 +1,466 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JSplacement</title>
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Nicogs' JSplacement</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbarItems">
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="container">
+		<div class="row justify-content-md-center m-4">
+			<div class="col col-md-auto">
+				<h1>Nicogs' JSplacement: classic</h1>
+			</div>
+		</div>
+		<div class="row justify-content-md-center">
+			<div class="col">
+				<div class="canvas-container">
+					<canvas class="art" id="heightCanvas" width="8192" height="8192"></canvas>
+					<canvas class="extraCanvas invisible" id="colorCanvas" width="8192" height="8192"></canvas>
+					<canvas class="extraCanvas invisible" id="normalCanvas" width="8192" height="8192"></canvas>
+				</div>
+				<div class="row justify-content-md-center text-center m-4">
+					<div class="col-md-auto m-1">
+						<button type="button" id="toolInvert" class="btn btn-outline-primary">Invert</button>
+						<button type="button" id="toolShowNormal" class="btn btn-outline-primary">Show Normal</button>
+						<button type="button" id="toolHide" class="btn btn-outline-primary">Hide color/normal</button>
+					</div>
+					<div class="col-md-auto m-1">
+						<button id="heightExport" class="btn btn-outline-primary">Download</button>
+						<button type="button" id="toolSaveNormal" class="btn btn-outline-primary">Save Normal</button>
+						<button type="button" id="toolSaveColor" class="btn btn-outline-primary">Save Color</button>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-7 col-sm-12">
+				<form id="settings">
+					<div class="accordion accordion-flush" id="accordionSettings">
+						<!--*********************
+						*	Canvas Settings		*
+						**********************-->
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingMainSettings">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMainSettings" aria-expanded="false" aria-controls="collapseMainSettings">
+									Main Settings
+								</button>
+							</h2>
+							<div id="collapseMainSettings" class="accordion-collapse collapse" aria-labelledby="headingMainSettings" data-bs-parent="#accordionSettings">
+								<div class="accordion-body">
+									<div class="row row-cols-lg-auto g-2 align-items-center">
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="canvasIters" placeholder="1390" value="1390">
+												<label for="canvasIters">Itteration</label>
+											</div>
+										</div>
+
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="canvasBrightness" placeholder="27" value="27">
+												<label for="canvasBrightness">Brightness</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!--*********************
+						Box Setting
+						*********************-->
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingBoxSettings">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBoxSettings" aria-expanded="fase" aria-controls="collapseBoxSettings">
+									Box Settings
+								</button>
+							</h2>
+							<div id="collapseBoxSettings" class="accordion-collapse collapse" aria-labelledby="headingBoxSettings" data-bs-parent="#accordionSettings">
+								<div class="accordion-body">
+									<div class="form-check mb-4">
+										<input class="form-check-input" type="checkbox" id="boxOption" checked>
+										<label class="form-check-label" for="boxOption">
+											Enable the use of box for the next render.
+										</label>
+									</div>
+									
+									<div class="row row-cols-lg-auto g-2 align-items-center">
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="boxScale"  value="100"  step="1">
+												<label for="boxScale">Scale</label>
+											</div>
+										</div>
+
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="boxBrightnessMin" value="0" step="1" placeholder="1390" value="1390">
+												<label for="boxBrightnessMin">Brightness Min</label>
+											</div>
+										</div>
+
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="boxBrightnessMax" value="255" step="1" placeholder="1390" value="1390">
+												<label for="boxBrightnessMax">Brightness Max</label>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!--*********************
+						Transparant Box Setting
+						*********************-->
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingTransparantBoxSettings">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTransparantBoxSettings" aria-expanded="false" aria-controls="collapseTransparantBoxSettings">
+								Transparant Box Settings
+								</button>
+							</h2>
+
+							<div id="collapseTransparantBoxSettings" class="accordion-collapse collapse" aria-labelledby="headingTransparantBoxSettings" data-bs-parent="#accordionSettings">
+								<div class="accordion-body">
+									<div class="form-check mb-4">
+										<input class="form-check-input" type="checkbox" id="transparantBoxOption" checked>
+										<label class="form-check-label" for="transparantBoxOption">
+											Enable the use of transparant boxes for the next render.
+										</label>
+									</div>								
+									<div class="row row-cols-lg-auto g-2 align-items-center">
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="transparantBoxScale" value="100" step="1">
+												<label for="transparantBoxScale">Scale</label>
+											</div>
+										</div>
+
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="transparantBoxBrightnessMin" value="0" step="1" placeholder="1390" value="1390">
+												<label for="transparantBoxBrightnessMin">Brightness Min</label>
+											</div>
+										</div>
+										
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="transparantBoxBrightnessMax" value="255" step="1" placeholder="1390" value="1390">
+												<label for="transparantBoxBrightnessMax">Brightness Max</label>
+											</div>
+										</div>
+
+
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="transparantBoxAlphaMin" placeholder="1390" value="1390">
+												<label for="transparantBoxAlphaMin">Alpha Min</label>
+											</div>
+										</div>
+										
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="transparantBoxAlphaMax" placeholder="1390" value="1390">
+												<label for="transparantBoxAlphaMax">Alpha Max</label>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!--*********************
+						Grid Setting
+						*********************-->
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingGrid">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGrid" aria-expanded="false" aria-controls="collapseGrid">
+									Grid Settings
+								</button>
+							</h2>
+							
+							<div id="collapseGrid" class="accordion-collapse collapse" aria-labelledby="headingGrid" data-bs-parent="#accordionSettings">
+								<div class="accordion-body">
+									<div class="form-check mb-4">
+										<input class="form-check-input" type="checkbox" id="gridOption" checked>
+										<label class="form-check-label" for="gridOption">
+											Enable the use of grid for the next render.
+										</label>
+									</div>
+									<div class="row row-cols-lg-auto g-2 align-items-center">
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="gridScale" value="100" step="1">
+												<label for="gridScale">Scale</label>
+											</div>
+										</div>
+
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="gridSpacing" placeholder="1390" value="1390">
+												<label for="gridSpacing">Spacing</label>
+											</div>
+										</div>
+										
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="gridAmount"  step="1" placeholder="1390" value="1390">
+												<label for="gridAmount">Amount</label>
+											</div>
+										</div>
+
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="gridBrightnessMin" value="0" step="1" placeholder="1390" value="1390">
+												<label for="gridBrightnessMin">Brightness Min</label>
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="gridBrightnessMax" value="255" step="1" placeholder="1390" value="1390">
+												<label for="gridBrightnessMax">Brightness Max</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+						<!--*********************
+						Columns Setting
+						*********************-->
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingColumns">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseColumns" aria-expanded="false" aria-controls="collapseColumns">
+									Columns Settings
+								</button>
+							</h2>
+							<div id="collapseColumns" class="accordion-collapse collapse" aria-labelledby="headingColumns" data-bs-parent="#accordionSettings">
+								<div class="accordion-body">
+									<div class="form-check mb-4">
+										<input class="form-check-input" type="checkbox" id="columnsOption" checked>
+										<label class="form-check-label" for="columnsOption">
+											Enable the use of columns for the next render.
+										</label>
+									</div>
+									<div class="row row-cols-lg-auto g-2 align-items-center">
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="columnsScale" value="100"  step="1">
+												<label for="columnsScale">Scale</label>
+											</div>
+										</div>
+									
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="columnsSpacing" step="1" placeholder="1390" value="1390">
+												<label for="columnsSpacing">Spacing</label>
+											</div>
+										</div>
+									
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="columnsAmount"  step="1" placeholder="1390" value="1390">
+												<label for="columnsAmount">Amount</label>
+											</div>
+										</div>
+
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="columnsBrightnessMin" value="0" step="1" placeholder="74" value="74">
+												<label for="columnsBrightnessMin">Brightness Min</label>
+											</div>
+										</div>
+									
+										<div class="col-12">
+											<div class="form-floating">
+												<input type="number" class="form-control" id="columnsBrightnessMax" value="255" step="1" placeholder="181" value="181">
+												<label for="columnsBrightnessMax">Brightness Max</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!--*********************
+						Rows Setting
+						*********************-->
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingRows">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRows" aria-expanded="false" aria-controls="collapseRows">
+								Rows Settings
+								</button>
+							</h2>
+							<div id="collapseRows" class="accordion-collapse collapse" aria-labelledby="headingRows" data-bs-parent="#accordionSettings">
+								<div class="accordion-body">
+								<div class="form-check mb-4">
+									<input class="form-check-input" type="checkbox" id="rowsOption" checked>
+									<label class="form-check-label" for="rowsOption">
+										Enable the use of rows for the next render.
+									</label>
+								</div>
+								<div class="row row-cols-lg-auto g-2 align-items-center">
+									<div class="col-12">
+										<div class="form-floating">
+											<input type="number" class="form-control" id="rowsScale" value="100"  step="1">
+											<label for="rowsScale">Scale</label>
+										</div>
+									</div>
+								
+									<div class="col-12">
+										<div class="form-floating">
+											<input type="number" class="form-control" id="rowsSpacing" step="1" placeholder="1390" value="1390">
+											<label for="rowsSpacing">Spacing</label>
+										</div>
+									</div>
+								
+									<div class="col-12">
+										<div class="form-floating">
+											<input type="number" class="form-control" id="rowsAmount"  step="1" placeholder="1390" value="1390">
+											<label for="rowsAmount">Amount</label>
+										</div>
+									</div>
+								
+									<div class="col-12">
+										<div class="form-floating">
+											<input type="number" class="form-control" id="rowsBrightnessMin" value="0" step="1" placeholder="74" value="74">
+											<label for="rowsBrightnessMin">Brightness Min</label>
+										</div>
+									</div>
+								
+									<div class="col-12">
+										<div class="form-floating">
+											<input type="number" class="form-control" id="rowsBrightnessMax" value="255" step="1" placeholder="181" value="181">
+											<label for="rowsBrightnessMax">Brightness Max</label>
+										</div>
+									</div>
+								</div>
+								</div>
+							</div>
+						</div>
+
+						<!--*********************
+						Lines Setting
+						*********************-->
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingLines">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLines" aria-expanded="false" aria-controls="collapseLines">
+								Lines Settings
+								</button>
+							</h2>
+							<div id="collapseLines" class="accordion-collapse collapse" aria-labelledby="headingLines" data-bs-parent="#accordionSettings">
+								<div class="accordion-body">
+								<div class="form-check mb-4">
+									<input class="form-check-input" type="checkbox" id="linesOption" checked>
+									<label class="form-check-label" for="linesOption">
+										Enable the use of lines for the next render.
+									</label>
+								</div>
+								<div class="row row-cols-lg-auto g-2 align-items-center">
+									<div class="col-12">
+										<div class="form-floating">
+											<input type="number" class="form-control" id="linesWidth" value="10" step="1">
+											<label for="linesWidth">Width</label>
+										</div>
+									</div>
+								
+									<div class="col-12">
+										<div class="form-floating">
+											<input type="number" class="form-control" id="linesBrightnessMin" value="0" step="1" placeholder="74" value="74">
+											<label for="linesBrightnessMin">Brightness Min</label>
+										</div>
+									</div>
+								
+									<div class="col-12">
+										<div class="form-floating">
+											<input type="number" class="form-control" id="linesBrightnessMax" value="255" step="1" placeholder="181" value="181">
+											<label for="linesBrightnessMax">Brightness Max</label>
+										</div>
+									</div>
+								</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--*********************
+					GENERATE LFG!
+					*********************-->
+					<div class="col-12">
+						<div class="input-group m-3">
+							<button type="submit" id="generateBtn" class="btn btn-outline-primary">Generate</button>
+							<button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+								<span class="visually-hidden"></span>
+							</button>
+
+							<ul class="dropdown-menu">
+								<li><button type="button" id="presetEssential" class="dropdown-item">Essential Preset</button></li>
+								<li><button type="button" id="presetEsstialTwo" class="dropdown-item">Essential II Preset</button></li>
+								<li><button type="button" id="presetMinimal" class="dropdown-item">Minimal Preset</button></li>
+								<li><button type="button" id="presetGnarly" class="dropdown-item">Gnarly Preset</button></li>
+								<li><button type="button" id="presetDotGrid" class="dropdown-item">Not dotGrid Preset</button></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#">Separated link</a></li>
+							</ul>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+<!--*********************
+Colorize
+*********************-->
+<div class="container">
+	<div class="row justify-content-md-center m-4">
+		<div class="col-12">
+			<div class="container">
+				<hr/>
+				<h3>Colorize Art</h3>
+				<div class="row" id="colorOptions">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<script src="./utils.js"></script>
+<script src="./js/colorizer.js"></script>
+<script src="./js/tools.js"></script>
+<script src="./js/export.js"></script>
+
+
+<script src="./js/classic/settings.js"></script>
+<script src="./js/classic/presets.js"></script>
+<script src="./js/classic/classic.js"></script>
+
+	<!-- JavaScript Bundle with Popper -->
+
+</body>
+</html>

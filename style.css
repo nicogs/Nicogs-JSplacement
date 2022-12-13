@@ -1,0 +1,42 @@
+*, body {
+	margin: 0;
+	padding: 0;
+}
+
+.canvas-container {
+	width: 500px;
+	height: 500px;
+	background-color: #202020;
+	margin: auto;
+}
+
+canvas.art{
+	width: 500px;
+	height: 500px;
+	position: absolute;
+}
+.extraCanvas{
+	width: 500px;
+	height: 500px;
+	position: absolute;
+}
+
+form, label, input, p, span {
+
+}
+
+
+.btn {
+	border-radius: 0px;
+}
+
+.input-group-text{
+	font-size: small;
+}
+
+.gradient{
+	max-height: 50px;
+	width: auto;
+	margin: 4px;
+}
+
