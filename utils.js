@@ -68,10 +68,10 @@ function navbar() {
 			name: "dotGrid",
 			file: "dotGrid.html"
 		},
-		{
-			name: "Ultra",
-			file: "ultra.html"
-		},
+		// {
+		// 	name: "Ultra",
+		// 	file: "ultra.html"
+		// },
 	];
 	const ul = document.getElementById("navbarItems");
 
